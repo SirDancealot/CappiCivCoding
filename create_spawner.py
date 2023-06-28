@@ -1,13 +1,41 @@
 from custom_items import CUSTOM_ITEMS
-item = "{{id:\"{0}\",Count:{1}}}"
+item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
 entity = "{{entity:{{id:{0},PersistenceRequired:1,HandItems:[{1},{2}],ArmorItems :[{3},{4},{5},{6}],HandDropChances:[{7}],ArmorDropChances:[{8}]}}}}"
 spawn_potentiel = "{{weight:{0},data:{1}}}"
 
+enchantment = "{{lvl: {0}s, id:\"{1}\"}}"
+tool_enchantment = "Enchantments:[{0}]"
+book_enchantment = "StoredEnchantments:[{0}]"
+
+yes_options = ["y", "yes"]
+no_options = ["n", "no"]
 unstackables = ["axe","shovel","sword","hoe","horn","trident","shield","helmet","chestplate","leggings","boots","totem_of_undying","carved_pumpkin","jack","fishing","a_stick","_bucket"]
 
 
 def inp(message):
     return input(message).lower().strip().replace(" ", "_")
+
+def generate_enchantment(is_book: bool) -> str:
+    do_enchantment = inp("should it be enchanted?: (y/N)") in yes_options
+    if not do_enchantment:
+        return ""
+    
+    enchantment_list = []
+
+    number_of_enchantments = int(inp("how many enchantments should it have?: "))
+    for i in range(number_of_enchantments):
+
+        enchantment_id = inp("enchantment id: ")
+        level = inp("enchantment level: ")
+
+        enchantment_list.append(enchantment.format(level, enchantment_id))
+
+    if is_book:
+        return book_enchantment.format(",".join(enchantment_list))
+    else:
+        return tool_enchantment.format(",".join(enchantment_list))
+
+
 
 def generate_item(message):
     print("-"*20)
@@ -17,10 +45,11 @@ def generate_item(message):
         return "{}", 0.0
     item_count = 1 if any([unstackable in item_id for unstackable in unstackables]) else inp("item count: ")
     drop_chance = float(inp("drop chance (in percent): "))
-    drop_chance = (drop_chance / 100.0) if drop_chance is not "" else 0.0
+    drop_chance = (drop_chance / 100.0) if drop_chance != "" else 0.0
     if item_id in CUSTOM_ITEMS.keys():
         return CUSTOM_ITEMS.get(item_id).format(item_count), drop_chance
-    return item.format(item_id, item_count), drop_chance
+    enchantments = generate_enchantment(item_id == "enchanted_book")
+    return item.format(item_id, item_count, enchantments), drop_chance
 
 def generate_entity(message):
     hand_drop_chances = [0.0, 0.0]
@@ -46,10 +75,6 @@ def generate_spawn_potential(message: str):
 
 
 
-
-
-
-
 initial_spawn_delay = inp("Initial spawn delay: ")
 min_spawn_delay = inp("minimum spawn delay: ")
 max_spawn_delay = input("max spawn delay: ")
@@ -57,8 +82,7 @@ spawn_count = inp("spawn count: ")
 
 first_monster = generate_entity("first spawn")
 multiple_monsters = inp("should there be multiple monsters? (y/N) ")
-yes_options = ["y", "yes"]
-no_options = ["n", "no"]
+
 
 
 monster_list = []
