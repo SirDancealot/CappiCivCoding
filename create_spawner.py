@@ -17,7 +17,10 @@ def generate_item(message):
         return "{}", 0.0
     item_count = 1 if any([unstackable in item_id for unstackable in unstackables]) else inp("item count: ")
     drop_chance = float(inp("drop chance (in percent): "))
-    return item.format(item_id, item_count), (drop_chance / 100.0) if drop_chance is not "" else 0.0
+    drop_chance = (drop_chance / 100.0) if drop_chance is not "" else 0.0
+    if item_id in CUSTOM_ITEMS.keys():
+        return CUSTOM_ITEMS.get(item_id).format(item_count), drop_chance
+    return item.format(item_id, item_count), drop_chance
 
 def generate_entity(message):
     hand_drop_chances = [0.0, 0.0]
