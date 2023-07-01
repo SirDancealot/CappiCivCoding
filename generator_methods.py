@@ -35,13 +35,13 @@ def generate_enchantment(is_book: bool) -> str:
 
 item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
-def generate_item(message: str, get_drop_chance: bool):
+def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool = True):
     print("-"*20)
     print(message)
-    item_id = inp("item id: ")
+    item_id = item_id if item_id else inp("item id: ")
     if item_id == "":
         return "{}", 0.0
-    item_count = 1 if any([un_stack_able in item_id for un_stack_able in un_stack_ables]) else inp("item count: ")
+    item_count = item_count if item_count else (1 if any([un_stack_able in item_id for un_stack_able in un_stack_ables]) else inp("item count: "))
     drop_chance = 0.0
     if get_drop_chance:
         drop_chance = float(inp("drop chance (in percent): "))
@@ -55,7 +55,9 @@ def generate_item(message: str, get_drop_chance: bool):
             return horn.format(horn_type)
         horn_type = inp("Horn type: ")
         return horn.format(horn_type), drop_chance
-    enchantments = generate_enchantment(item_id == "enchanted_book")
+    enchantments = ""
+    if do_enchantment:
+        enchantments = generate_enchantment(item_id == "enchanted_book")
     if not get_drop_chance:
         return item.format(item_id, item_count, enchantments)
     return item.format(item_id, item_count, enchantments), drop_chance
