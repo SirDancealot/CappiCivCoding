@@ -11,14 +11,14 @@ def inp(message):
 enchantment = "{{lvl: {0}s, id:\"{1}\"}}"
 tool_enchantment = "Enchantments:[{0}]"
 book_enchantment = "StoredEnchantments:[{0}]"
-def generate_enchantment(is_book: bool) -> str:
-    do_enchantment = inp("should it be enchanted?: (y/N)") in YES_OPTIONS
+def generate_enchantment(is_book: bool, force_enchant: bool = None, num_enchants: int|None = None) -> str:
+    do_enchantment = force_enchant if force_enchant is not None else inp("should it be enchanted?: (y/N)") in YES_OPTIONS
     if not do_enchantment:
         return ""
     
     enchantment_list = []
 
-    number_of_enchantments = int(inp("how many enchantments should it have?: "))
+    number_of_enchantments = num_enchants if num_enchants else int(inp("how many enchantments should it have?: "))
     for i in range(number_of_enchantments):
 
         enchantment_id = inp("enchantment id: ")
@@ -35,7 +35,7 @@ def generate_enchantment(is_book: bool) -> str:
 
 item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
-def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool = True):
+def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool|None = None, number_enchants: int|None = None):
     print("-"*20)
     print(message)
     item_id = item_id if item_id else inp("item id: ")
@@ -55,9 +55,7 @@ def generate_item(message: str, get_drop_chance: bool = False, item_id = None, i
             return horn.format(horn_type)
         horn_type = inp("Horn type: ")
         return horn.format(horn_type), drop_chance
-    enchantments = ""
-    if do_enchantment:
-        enchantments = generate_enchantment(item_id == "enchanted_book")
+    enchantments = generate_enchantment(item_id == "enchanted_book", do_enchantment, number_enchants)
     if not get_drop_chance:
         return item.format(item_id, item_count, enchantments)
     return item.format(item_id, item_count, enchantments), drop_chance
