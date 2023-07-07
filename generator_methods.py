@@ -2,7 +2,7 @@ from custom_items import CUSTOM_ITEMS
 
 YES_OPTIONS = ["y", "yes"]
 NO_OPTIONS = ["n", "no"]
-un_stack_ables = ["axe","shovel","sword","hoe","horn","trident","shield","helmet","chestplate","leggings","boots","totem_of_undying","carved_pumpkin","jack","fishing","a_stick","_bucket"]
+un_stack_ables = ["potion","axe","shovel","sword","hoe","horn","trident","shield","helmet","chestplate","leggings","boots","totem_of_undying","carved_pumpkin","jack","fishing","a_stick","_bucket"]
 
 
 def inp(message):
@@ -35,6 +35,7 @@ def generate_enchantment(is_book: bool, force_enchant: bool = None, num_enchants
 
 item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
+potion = "{{id: \"potion\", tag: {{Potion:{0}}}, Count: 1}}"
 def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool|None = None, number_enchants: int|None = None):
     print("-"*20)
     print(message)
@@ -51,10 +52,15 @@ def generate_item(message: str, get_drop_chance: bool = False, item_id = None, i
             return CUSTOM_ITEMS.get(item_id).format(item_count)
         return CUSTOM_ITEMS.get(item_id).format(item_count), drop_chance
     elif item_id == "horn":
+        horn_type = inp("Horn type: ")
         if not get_drop_chance:
             return horn.format(horn_type)
-        horn_type = inp("Horn type: ")
         return horn.format(horn_type), drop_chance
+    elif item_id == "potion":
+        potion_effect = inp("Potion effect: ")
+        if not get_drop_chance:
+            return potion.format(potion_effect)
+        return potion.format(potion_effect), drop_chance
     enchantments = generate_enchantment(item_id == "enchanted_book", do_enchantment, number_enchants)
     if not get_drop_chance:
         return item.format(item_id, item_count, enchantments)
