@@ -36,6 +36,7 @@ def generate_enchantment(is_book: bool, force_enchant: bool = None, num_enchants
 item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
 potion = "{{id: \"potion\", tag: {{Potion:{0}}}, Count: 1}}"
+sus_stew = "{{id: \"suspicious_stew\", tag:{{Effects:[{{EffectId:{0}, EffectDuration:{1}}}]}}, Count: {2}}}"
 def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool|None = None, number_enchants: int|None = None):
     print("-"*20)
     print(message)
@@ -61,6 +62,12 @@ def generate_item(message: str, get_drop_chance: bool = False, item_id = None, i
         if not get_drop_chance:
             return potion.format(potion_effect)
         return potion.format(potion_effect), drop_chance
+    elif item_id in ['s_stew', 'sus_stew', 'suspicious_stew']:
+        effect_id = inp("stew effect id: ")
+        effect_duration = inp("Duration of effect (in ticks):")
+        if not get_drop_chance:
+            return sus_stew.format(effect_id, effect_duration, item_count)
+        return sus_stew.format(effect_id, effect_duration, item_count), drop_chance
     enchantments = generate_enchantment(item_id == "enchanted_book", do_enchantment, number_enchants)
     if not get_drop_chance:
         return item.format(item_id, item_count, enchantments)
