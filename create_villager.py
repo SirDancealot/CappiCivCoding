@@ -1,4 +1,4 @@
-from generator_methods import generate_item, YES_OPTIONS
+from generator_methods import generate_item, YES_OPTIONS, inp
 
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
 item = "{{id:\"{0}\",Count:{1}}}"
@@ -21,11 +21,11 @@ for i in range(num_trades):
     if do_dual_trade in YES_OPTIONS:
         item_1 = generate_item("generating buy item 1", False)
         item_2 = generate_item("generating buy item 2", False)
-        sell_item = generate_item("generating sell item", False)
+        sell_item = generate_item("generating sell item", False, can_be_shulker=True)
         trade_list.append(dual_trade.format(item_1, item_2, sell_item))
     else:
         buy_item = generate_item("generating buy item")
-        sell_item = generate_item("generating sell item")
+        sell_item = generate_item("generating sell item", can_be_shulker=True)
         trade_list.append(trade.format(buy_item, sell_item))
 
 trade_string = ",".join(trade_list)

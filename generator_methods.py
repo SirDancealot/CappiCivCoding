@@ -37,12 +37,14 @@ item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
 potion = "{{id: \"potion\", tag: {{Potion:{0}}}, Count: 1}}"
 sus_stew = "{{id: \"suspicious_stew\", tag:{{Effects:[{{EffectId:{0}, EffectDuration:{1}}}]}}, Count: {2}}}"
-def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool|None = None, number_enchants: int|None = None):
+def generate_item(message: str, get_drop_chance: bool = False, item_id = None, item_count = None, do_enchantment: bool|None = None, number_enchants: int|None = None, can_be_shulker: bool = False):
     print("-"*20)
     print(message)
     item_id = item_id if item_id else inp("item id: ")
     if item_id == "":
         return "{}", 0.0
+    if item_id.endswith("shulker_box") and can_be_shulker:
+        return generate_shulker(item_id)
     item_count = item_count if item_count else (1 if any([un_stack_able in item_id for un_stack_able in un_stack_ables]) else inp("item count: "))
     drop_chance = 0.0
     if get_drop_chance:
@@ -72,6 +74,26 @@ def generate_item(message: str, get_drop_chance: bool = False, item_id = None, i
     if not get_drop_chance:
         return item.format(item_id, item_count, enchantments)
     return item.format(item_id, item_count, enchantments), drop_chance
+
+shulker_box = "{{id: \"{0}\", Count: 1b, tag: {{BlockEntityTag: {{Items: [{1}], id: \"{2}\"}}}}}}"
+def generate_shulker(shulker_id: str):
+    stack_count = int(inp("How many stacks of items will there be: "))
+    all_same = inp("Should all the stacks be the same [y/N]: ") in YES_OPTIONS
+
+    all_items = []
+
+    if all_same:
+        item_in_shulker = generate_item("Generating item to fill shulker with")
+        all_items = [add_slot_to_item(item_in_shulker, i) for i in range(stack_count)]
+    else:
+        for i in range(stack_count):
+            all_items.append(add_slot_to_item(generate_item(f"Generating item number {i}"), i))
+
+    return shulker_box.format(shulker_id, ",".join(all_items), shulker_id)
+
+
+def add_slot_to_item(item: str, slot: int):
+    return f"{item[:-1]}, Slot:{slot}b{item[-1:]}"
 
 entity = "{{entity:{{id:{0},PersistenceRequired:1,HandItems:[{1},{2}],ArmorItems :[{3},{4},{5},{6}],HandDropChances:[{7}],ArmorDropChances:[{8}]}}}}"
 def generate_entity(message):
