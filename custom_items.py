@@ -12,3 +12,7 @@ CUSTOM_ITEMS["p_barrel"] = "{{id: \"clock\", tag: {{CustomModelData: 2670006, di
 CUSTOM_ITEMS["book_v"] = "{{id: \"clock\", tag: {{CustomModelData: 2670007, display: {{Name: '{{\"text\":\"Book Token\", \"italic\":false}}'}}}}, Count: {0}}}"
 CUSTOM_ITEMS["burger"] = "{{id: \"cooked_beef\", tag: {{CustomModelData: 2670001, display: {{Name: '{{\"text\":\"Hamburger\", \"italic\":false}}'}}}}, Count: {0}}}"
 CUSTOM_ITEMS["salad"] = "{{id: \"beetroot_soup\", tag: {{CustomModelData: 2670001, display: {{Name: '{{\"text\":\"Salad\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["radio"] = "{{id: \"clock\", tag: {{CustomModelData: 2670011, display: {{Name: '{{\"text\":\"Radio\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["damaged_radio"] = "{{id: \"clock\", tag: {{CustomModelData: 2670012, display: {{Name: '{{\"text\":\"Damaged Radio\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["toolbox"] = "{{id: \"clock\", tag: {{CustomModelData: 2670013, display: {{Name: '{{\"text\":\"Toolbox\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["key_shard"] = "{{id: \"clock\", tag: {{CustomModelData: 2670014, display: {{Name: '{{\"text\":\"Key Shard\", \"italic\":false}}'}}}}, Count: {0}}}"
