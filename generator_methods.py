@@ -33,7 +33,7 @@ def generate_enchantment(is_book: bool, force_enchant: bool = None, num_enchants
 
 
 
-item = "{{id:\"{0}\",Count:{1}, tag:{{{2}}}}}"
+item = "{{id:\"{0}\",Count:{1}{2}}}"
 horn = "{{id: \"goat_horn\", tag: {{instrument: {0}_goat_horn}}, Count: 1}}"
 potion = "{{id: \"potion\", tag: {{Potion:{0}}}, Count: 1}}"
 sus_stew = "{{id: \"suspicious_stew\", tag:{{Effects:[{{EffectId:{0}, EffectDuration:{1}}}]}}, Count: {2}}}"
@@ -72,8 +72,8 @@ def generate_item(message: str, get_drop_chance: bool = False, item_id = None, i
         return sus_stew.format(effect_id, effect_duration, item_count), drop_chance
     enchantments = generate_enchantment(item_id == "enchanted_book", do_enchantment, number_enchants)
     if not get_drop_chance:
-        return item.format(item_id, item_count, enchantments)
-    return item.format(item_id, item_count, enchantments), drop_chance
+        return item.format(item_id, item_count, f", tag:{{{enchantments}}}" if enchantments != "" else "")
+    return item.format(item_id, item_count, f", tag:{{{enchantments}}}" if enchantments != "" else ""), drop_chance
 
 shulker_box = "{{id: \"{0}\", Count: 1b, tag: {{BlockEntityTag: {{Items: [{1}], id: \"{2}\"}}}}}}"
 def generate_shulker(shulker_id: str):
