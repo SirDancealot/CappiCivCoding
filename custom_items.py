@@ -16,3 +16,11 @@ CUSTOM_ITEMS["radio"] = "{{id: \"clock\", tag: {{CustomModelData: 2670011, displ
 CUSTOM_ITEMS["damaged_radio"] = "{{id: \"clock\", tag: {{CustomModelData: 2670012, display: {{Name: '{{\"text\":\"Damaged Radio\", \"italic\":false}}'}}}}, Count: {0}}}"
 CUSTOM_ITEMS["toolbox"] = "{{id: \"clock\", tag: {{CustomModelData: 2670013, display: {{Name: '{{\"text\":\"Toolbox\", \"italic\":false}}'}}}}, Count: {0}}}"
 CUSTOM_ITEMS["key_shard"] = "{{id: \"clock\", tag: {{CustomModelData: 2670014, display: {{Name: '{{\"text\":\"Key Shard\", \"italic\":false}}'}}}}, Count: {0}}}"
+
+CUSTOM_ITEMS["jewel_pillar"] = "{{id: \"clock\", tag: {{CustomModelData: 2670015, display: {{Name: '{{\"text\":\"Pillar Jewel\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["jewel_shuriken"] = "{{id: \"clock\", tag: {{CustomModelData: 2670016, display: {{Name: '{{\"text\":\"Shuriken Jewel\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["jewel_stack"] = "{{id: \"clock\", tag: {{CustomModelData: 2670017, display: {{Name: '{{\"text\":\"Stack Jewel\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["jewel_swirl"] = "{{id: \"clock\", tag: {{CustomModelData: 2670018, display: {{Name: '{{\"text\":\"Swirl Jewel\", \"italic\":false}}'}}}}, Count: {0}}}"
+
+CUSTOM_ITEMS["Shuriken"] = "{{id: \"clock\", tag: {{CustomModelData: 2670019, display: {{Name: '{{\"text\":\"Shuriken\", \"italic\":false}}'}}}}, Count: {0}}}"
+CUSTOM_ITEMS["warden_key"] = "{{id: \"clock\", tag: {{CustomModelData: 2670020, display: {{Name: '{{\"text\":\"Wardens Key\", \"italic\":false}}'}}}}, Count: {0}}}"
